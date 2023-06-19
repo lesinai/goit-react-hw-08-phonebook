@@ -79,7 +79,7 @@ export default function ContactList() {
             <Popover isLazy placement="top-start">
               <PopoverTrigger>
                 <Button color="pink.500" bg="white">
-                  {name}
+                  {name} : {number}
                 </Button>
               </PopoverTrigger>
               <PopoverContent color="purple.500" w="210px">
@@ -94,7 +94,7 @@ export default function ContactList() {
               ml="auto"
               bg="pink.500"
               display="flex"
-              size="40px"
+              size="15px"
               type="submit"
               onClick={() => dispatch(deleteContact(id))}
             >
