@@ -9,14 +9,26 @@ import {
   InputLeftElement,
 } from '@chakra-ui/react';
 import { AtSignIcon, ViewOffIcon, AddIcon } from '@chakra-ui/icons';
+import React, { useState } from 'react';
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const handleSubmit = e => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value,
+      email,
+      password,
     };
     dispatch(loginThunk(user));
   };
@@ -44,6 +56,8 @@ export const Login = () => {
             type="text"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             placeholder="Email..."
+            value={email}
+            onChange={handleEmailChange}
           />
         </InputGroup>
         <InputGroup mb="20px" mt="20px">
@@ -63,6 +77,8 @@ export const Login = () => {
             placeholder="Password..."
             minLength="7"
             autoComplete="on"
+            value={password}
+            onChange={handlePasswordChange}
           />
         </InputGroup>
         <Button
