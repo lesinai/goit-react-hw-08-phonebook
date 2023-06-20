@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registrationThunk } from 'redux/auth/authOperations';
 import {
@@ -12,15 +13,24 @@ import { AddIcon, StarIcon, AtSignIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export const Registration = () => {
   const dispatch = useDispatch();
-  const handleSubmit = e => {
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const user = {
-      name: e.target.elements.name.value,
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value,
-    };
     dispatch(registrationThunk(user));
   };
+
+  const handleChange = (e) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <Container mb="40px" mt="20px">
       <form onSubmit={handleSubmit}>
@@ -44,6 +54,8 @@ export const Registration = () => {
             placeholder="Name..."
             autoComplete="on"
             minLength="2"
+            value={user.name}
+            onChange={handleChange}
           />
         </InputGroup>
         <InputGroup mb="20px" mt="20px">
@@ -63,6 +75,8 @@ export const Registration = () => {
             type="text"
             placeholder="Email..."
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            value={user.email}
+            onChange={handleChange}
           />
         </InputGroup>
         <InputGroup mb="20px" mt="20px">
@@ -82,6 +96,8 @@ export const Registration = () => {
             placeholder="Password..."
             minLength="7"
             autoComplete="on"
+            value={user.password}
+            onChange={handleChange}
           />
         </InputGroup>
         <Button
